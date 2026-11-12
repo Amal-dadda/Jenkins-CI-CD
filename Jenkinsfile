@@ -72,6 +72,8 @@ pipeline {
                 withEnv(['JENKINS_NODE_COOKIE=dontKillMe']) {
                     sh '''#!/bin/bash
                         source ${VENV_DIR}/bin/activate
+pkill -f "gunicorn --bind" || true; sleep 1
+pkill -f "gunicorn --bind" || true; sleep 1
                         nohup gunicorn --bind ${HOST}:${PORT} ${APP_MODULE} > gunicorn.log 2>&1 &
                         echo "Gunicorn démarré sur http://${HOST}:${PORT}"
                     '''
